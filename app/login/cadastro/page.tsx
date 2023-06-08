@@ -11,6 +11,7 @@ export default function Cadastro(){
     const nomeCompletoRef = useRef<HTMLInputElement>(null)
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
+    const dateBirthRef = useRef<HTMLInputElement>(null)
 
 
     function handleSubmit(e: FormEvent){
@@ -19,15 +20,17 @@ export default function Cadastro(){
         if (usernameRef.current?.value === "") valueNull = valueNull + "Login, " 
         if (nomeCompletoRef.current?.value === "") valueNull = valueNull +  "Nome Completo, "
         if (emailRef.current?.value === "") valueNull = valueNull +  "email, "
-        if (passwordRef.current?.value === "") valueNull = valueNull + "senha"
+        if (passwordRef.current?.value === "") valueNull = valueNull + "senha, "
+        if (dateBirthRef.current?.value === "") valueNull = valueNull + "data de nascimento"
         if (valueNull !== "") window.alert(`Precisa preecher esses campos: ${valueNull}`)
         else{
-            axios.post("http://localhost:8080/login",{
-                "username": `${usernameRef.current?.value}`,
-                "fullname": `${nomeCompletoRef.current?.value}`,
-                "email": `${emailRef.current?.value}`,
-                "password": `%${passwordRef.current?.value}`
-            })
+            axios.post("http://localhost:8080/login/cadastro",{
+                    "username": `${usernameRef.current?.value}`,
+                    "fullname": `${nomeCompletoRef.current?.value}`,
+                    "email": `${emailRef.current?.value}`,
+                    "password": `${passwordRef.current?.value}`,
+                    "dateBirth": `${dateBirthRef.current?.value}`
+            }, )
         }
     }
 
@@ -42,6 +45,8 @@ export default function Cadastro(){
                     <input type="email" ref={emailRef} className='bg-zinc-900 text-zinc-300' placeholder='Digite seu Email'/>
                     <label>Senha:</label>
                     <input type="password" ref={passwordRef} className='bg-zinc-900 text-zinc-300' placeholder='Digite sua Senha'/>
+                    <label>Data de Nascimento:</label>
+                    <input type="date" ref={dateBirthRef} className='bg-zinc-900 text-zinc-300' placeholder='Digite sua Senha'/>
                 </div>
                 <div>
                     <Link href="/login">

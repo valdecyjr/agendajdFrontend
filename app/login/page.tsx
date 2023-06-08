@@ -1,24 +1,33 @@
 'use client'
 import Link from "next/link"
 import FormComponents from "../components/formComponents"
-import { FormEvent, useRef } from "react"
-import axios from "axios"
+import { FormEvent, useRef, useState } from "react"
+import axios from "axios";
+import { useRouter } from 'next/navigation';
 
 export default function Login() {
 
   const usernameInputRef = useRef<HTMLInputElement>(null)
   const passwordInputRef = useRef<HTMLInputElement>(null)
 
+  const router = useRouter()
+
+  const [username, setUsername] = useState(null);
+
   function handleSubmit(e: FormEvent){
     e.defaultPrevented
-    axios.post("http://localhost:8080/login/loginValidation", {
+
+    axios.post("http://localhost:8080/login/loginvalidation", {
       username: usernameInputRef.current?.value,
       password: passwordInputRef.current?.value
-    }).then(response => (
-      console.log(response)
-    ))
+    }).then((response) => {
+      setUsername(response.data.username);
+      console.log(response.data);
+  })
   }
-
+  if(username){
+    router.push(`/${username}`)
+  }
   return (
     <FormComponents submitFunction={handleSubmit}>
       <div className='flex flex-col gap-2'>
@@ -34,10 +43,10 @@ export default function Login() {
         <a href="#" className="hover:bg-zinc-900 rounded"><i>Recuperar senha</i></a>
       </div>
       <div>
-      <Link href="/">
-        <button className="hover:bg-zinc-900 rounded w-28">Voltar</button>
-      </Link>  
         <button className="hover:bg-zinc-900 rounded w-28">Login</button>
+        <Link href="/">
+          <button className="hover:bg-zinc-900 rounded w-28">Voltar</button>
+        </Link>  
       </div>
     </FormComponents>
   )

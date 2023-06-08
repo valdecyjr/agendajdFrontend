@@ -1,11 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Dispatch, SetStateAction, useState } from "react";
 
-export default function Navbar(imageUrl: any){
+export default function Navbar({imageUrl, username}:{imageUrl: any, username: any}){
 
-    console.log(imageUrl)
-
+    const url = "/" + username
     return (
         <nav className="flex justift-between items-center w-screen md:h-[8vh] bg-white">
             <strong 
@@ -21,22 +19,24 @@ export default function Navbar(imageUrl: any){
                     <li>contatos</li>
                 </Link>
                 <Link href="/" className="w-[33%] h-[80%] hover:bg-gray-300 flex justify-center items-center">
-                    <li>search</li>
+                    <li>eventos</li>
                 </Link>
             </ul>
-            <div className="w-[20%] p-5 h-full flex justify-end items-center gap-5">
-                <strong>name</strong>
-                <Link href="/" className="flex w-auto h-auto justify-center items-center">
+            <Link href={url} className="w-[20%]">
+                <div className="w-[100%] p-5 h-full flex justify-end items-center gap-5">
+                    <strong>{username}</strong>
                     <Image
                             className="rounded-full"
-                            src={imageUrl.imageUrl}
+                            src={imageUrl}
                             alt="sua foto de perfil"
-                            width= {80}
-                            height={80}
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            style={{ width: '40%', height: '60%' }}
                             priority={true}
                         />
-                </Link>
-            </div>
+                </div>
+            </Link>
         </nav>
     )
 }
