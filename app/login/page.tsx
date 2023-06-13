@@ -4,6 +4,7 @@ import FormComponents from "../components/formComponents"
 import { FormEvent, useRef, useState } from "react"
 import axios from "axios";
 import { useRouter } from 'next/navigation';
+import { api } from "../api";
 
 export default function Login() {
 
@@ -17,12 +18,12 @@ export default function Login() {
   function handleSubmit(e: FormEvent){
     e.defaultPrevented
 
-    axios.post("http://localhost:8080/login/loginvalidation", {
+    api.post("/login/loginvalidation", {
       username: usernameInputRef.current?.value,
       password: passwordInputRef.current?.value
     }).then((response) => {
+      localStorage.setItem("user", JSON.stringify(response.data))
       setUsername(response.data.username);
-      console.log(response.data);
   })
   }
   if(username){
@@ -31,22 +32,17 @@ export default function Login() {
   return (
     <FormComponents submitFunction={handleSubmit}>
       <div className='flex flex-col gap-2'>
-        <label >Username ou Email:</label>
+        <label >Username ou E-mail:</label>
         <input ref={usernameInputRef} className='bg-zinc-900 text-zinc-300' placeholder='Digite seu Email'/>
         <label>Senha:</label>
         <input ref={passwordInputRef} type="password" className='bg-zinc-900 text-zinc-300' placeholder='Digite sua Senha'/>
       </div>
-      <div className="flex text-xs gap-3">
-        <Link href="login/cadastro">
-          <i className="hover:bg-zinc-900 rounded">Cadastre-se</i>
-        </Link>
-        <a href="#" className="hover:bg-zinc-900 rounded"><i>Recuperar senha</i></a>
+      <div className="md:flex md:text-xs md:gap-3 md:justify-start md:items-start">
+        <a href="/login/cadastro" className="md:flex md:hover:bg-zinc-900 md:rounded md:w-28 md:h-6 md:justify-center md:items-center"><i>cadastro</i></a>
+        <a href="#" className="md:flex md:hover:bg-zinc-900 md:rounded md:w-28 md:h-6 md:justify-center md:items-center"><i>Recuperar senha</i></a>
       </div>
-      <div>
+      <div className="m-5">
         <button className="hover:bg-zinc-900 rounded w-28">Login</button>
-        <Link href="/">
-          <button className="hover:bg-zinc-900 rounded w-28">Voltar</button>
-        </Link>  
       </div>
     </FormComponents>
   )

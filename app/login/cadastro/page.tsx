@@ -4,6 +4,7 @@ import FormComponents from "@/app/components/formComponents"
 import Link from "next/link"
 import { FormEvent, useRef } from "react"
 import axios from "axios"
+import { api } from "@/app/api"
 
 export default function Cadastro(){
 
@@ -41,14 +42,14 @@ export default function Cadastro(){
                     <input type="text" ref={usernameRef} className='bg-zinc-900 text-zinc-300' placeholder='Digite seu Usuario'/>
                     <label>Nome Completo:</label>
                     <input type="text" ref={nomeCompletoRef} className='bg-zinc-900 text-zinc-300' placeholder='Digite seu Nome Completo'/>
-                    <label>Email:</label>
+                    <label>E-mail:</label>
                     <input type="email" ref={emailRef} className='bg-zinc-900 text-zinc-300' placeholder='Digite seu Email'/>
                     <label>Senha:</label>
                     <input type="password" ref={passwordRef} className='bg-zinc-900 text-zinc-300' placeholder='Digite sua Senha'/>
                     <label>Data de Nascimento:</label>
                     <input type="date" ref={dateBirthRef} className='bg-zinc-900 text-zinc-300' placeholder='Digite sua Senha'/>
                 </div>
-                <div>
+                <div className="m-5">
                     <Link href="/login">
                         <button className="hover:bg-zinc-900 rounded w-28">Voltar</button>
                     </Link>  
